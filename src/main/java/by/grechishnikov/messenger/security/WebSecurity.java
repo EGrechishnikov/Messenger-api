@@ -1,5 +1,6 @@
 package by.grechishnikov.messenger.security;
 
+import by.grechishnikov.messenger.common.ApplicationProperty;
 import by.grechishnikov.messenger.security.filter.JWTAuthenticationFilter;
 import by.grechishnikov.messenger.security.filter.JWTAuthorizationFilter;
 import by.grechishnikov.messenger.security.service.TokenService;
@@ -29,6 +30,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserService userService;
     private TokenService tokenService;
+    private static final String FRONT_END_SERVER_ADDRESS =
+            ApplicationProperty.getStringProperty("front-end.address");
 
     public WebSecurity(UserDetailsServiceImpl userDetailsService,
                        BCryptPasswordEncoder bCryptPasswordEncoder,
@@ -45,6 +48,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/security/**").anonymous()
+                .antMatchers("/secured/**").anonymous()
+                .antMatchers("/user/**").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(), userService, tokenService))
@@ -61,9 +66,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedHeaders(Arrays.asList("X-Requested-With","Origin","Content-Type","Accept","Authorization"));
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        configuration.setAllowedOrigins(Arrays.asList(FRONT_END_SERVER_ADDRESS));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
