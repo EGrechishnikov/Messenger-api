@@ -60,7 +60,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         User user = userService.findByLogin(login);
         String accessToken = tokenService.createAccessToken(login);
         String refreshToken = tokenService.createRefreshToken(user);
-        TokenDTO tokenDTO = new TokenDTO(accessToken, refreshToken);
+        TokenDTO tokenDTO = new TokenDTO(accessToken, refreshToken, user.getId());
         user.setCurrentRefreshToken(refreshToken);
         user.setFailedLoginAttempts(0);
         userService.saveOrUpdate(user);

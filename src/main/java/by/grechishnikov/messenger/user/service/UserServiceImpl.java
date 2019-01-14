@@ -4,8 +4,11 @@ import by.grechishnikov.messenger.common.service.AbstractServiceImpl;
 import by.grechishnikov.messenger.user.entity.User;
 import by.grechishnikov.messenger.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  * @author - Evgeniy Grechishnikov
@@ -41,6 +44,13 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     @Override
     public User findByCurrentRefreshToken(String refreshToken) {
         return userRepository.findByCurrentRefreshToken(refreshToken);
+    }
+
+    @Override
+    public Page<User> search(String name, Pageable pageable) {
+        return StringUtils.isEmpty(name)
+                ? userRepository.findAll(pageable)
+                : userRepository.findAllByNameLike("%" + name + "%", pageable);
     }
 
     @Override

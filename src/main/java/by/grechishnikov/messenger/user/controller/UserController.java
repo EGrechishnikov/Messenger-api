@@ -54,9 +54,10 @@ public class UserController {
 
 
     @GetMapping
-    public ResponseEntity<Page<User>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<User>> search(@RequestParam(required = false) String name,
+                                             Pageable pageable) {
         try {
-            return new ResponseEntity<>(userService.findAll(pageable), HttpStatus.OK);
+            return new ResponseEntity<>(userService.search(name, pageable), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * @author - Evgeniy Grechishnikov
@@ -34,9 +35,15 @@ public class User extends AbstractEntity {
     private Date blockedTill;
     @Column
     private String currentRefreshToken;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "avatar_id")
     private Attachment attachment;
+    @Transient
+    @ManyToMany
+    @JoinTable(name = "t_contacts",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "contact_id"))
+    private List<User> contacts;
 
     public void setBlocked() {
         Calendar calendar = new GregorianCalendar();
