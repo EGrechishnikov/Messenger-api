@@ -11,6 +11,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * @author - Evgeniy Grechishnikov
+ */
 @Controller
 public class SocketController {
 

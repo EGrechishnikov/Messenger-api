@@ -2,9 +2,12 @@ package by.grechishnikov.messenger.websocket;
 
 import java.security.Principal;
 
+/**
+ * @author - Evgeniy Grechishnikov
+ */
 public class StompPrincipal implements Principal {
 
-    String name;
+    private String name;
 
     StompPrincipal(String name) {
         this.name = name;

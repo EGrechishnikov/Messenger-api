@@ -36,7 +36,7 @@ public class SecurityServiceImpl implements SecurityService {
         return new TokenDTO(
                 tokenService.createAccessToken(user.getLogin()),
                 tokenService.createRefreshToken(user),
-                user.getId());
+                user.getLogin());
     }
 
 }

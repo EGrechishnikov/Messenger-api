@@ -56,7 +56,7 @@ public class TokenServiceImpl implements TokenService {
         if (user == null || !user.getCurrentRefreshToken().equals(refreshToken)) {
             throw new BadCredentialsException("Invalid refresh token");
         }
-        return new TokenDTO(createAccessToken(user.getLogin()), createRefreshToken(user), user.getId());
+        return new TokenDTO(createAccessToken(user.getLogin()), createRefreshToken(user), user.getLogin());
     }
 
 }

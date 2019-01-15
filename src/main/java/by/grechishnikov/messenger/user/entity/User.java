@@ -2,6 +2,7 @@ package by.grechishnikov.messenger.user.entity;
 
 import by.grechishnikov.messenger.attachment.entity.Attachment;
 import by.grechishnikov.messenger.common.entity.AbstractEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -53,6 +54,7 @@ public class User extends AbstractEntity {
         setCurrentRefreshToken("");
     }
 
+    @JsonIgnore
     public boolean isBlocked() {
         return getBlockedTill() != null && new Date().before(getBlockedTill());
     }

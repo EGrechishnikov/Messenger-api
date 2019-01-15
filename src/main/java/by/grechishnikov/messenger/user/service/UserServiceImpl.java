@@ -1,14 +1,17 @@
 package by.grechishnikov.messenger.user.service;
 
+import by.grechishnikov.messenger.attachment.entity.Attachment;
 import by.grechishnikov.messenger.common.service.AbstractServiceImpl;
 import by.grechishnikov.messenger.user.entity.User;
 import by.grechishnikov.messenger.user.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author - Evgeniy Grechishnikov
@@ -24,6 +27,20 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         super(userRepository);
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public void convertAndSave(String json, MultipartFile avatar) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.readValue(json, User.class);
+        if (avatar != null && !avatar.isEmpty()) {
+            if (user.getAttachment() == null) {
+                user.setAttachment(new Attachment(avatar.getBytes()));
+            } else {
+                user.getAttachment().setContent(avatar.getBytes());
+            }
+        }
+        saveOrUpdate(user);
     }
 
     @Override

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author - Evgeniy Grechishnikov
@@ -24,9 +25,11 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> save(@RequestBody User user) {
+    public ResponseEntity<User> save(@RequestParam(value = "user") String json,
+                                     @RequestParam(value = "file", required = false) MultipartFile avatar) {
         try {
-            return new ResponseEntity<>(userService.saveOrUpdate(user), HttpStatus.OK);
+            userService.convertAndSave(json, avatar);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
