@@ -1,4 +1,4 @@
-package by.grechishnikov.messenger.websocket;
+package by.grechishnikov.messenger.websocket.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;

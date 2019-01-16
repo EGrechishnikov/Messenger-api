@@ -1,4 +1,4 @@
-package by.grechishnikov.messenger.websocket;
+package by.grechishnikov.messenger.websocket.handler;
 
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;

@@ -1,6 +1,7 @@
-package by.grechishnikov.messenger.websocket;
+package by.grechishnikov.messenger.websocket.handler;
 
 
+import by.grechishnikov.messenger.websocket.dto.StompPrincipal;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;

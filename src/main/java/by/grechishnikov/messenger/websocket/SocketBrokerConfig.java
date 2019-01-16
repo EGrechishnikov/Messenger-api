@@ -1,6 +1,8 @@
 package by.grechishnikov.messenger.websocket;
 
 import by.grechishnikov.messenger.common.ApplicationProperty;
+import by.grechishnikov.messenger.websocket.handler.CustomHandshakeHandler;
+import by.grechishnikov.messenger.websocket.handler.CustomHandshakeInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;

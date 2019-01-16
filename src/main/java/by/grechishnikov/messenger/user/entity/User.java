@@ -40,12 +40,6 @@ public class User extends AbstractEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "avatar_id")
     private Attachment attachment;
-    @Transient
-    @ManyToMany
-    @JoinTable(name = "t_contacts",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "contact_id"))
-    private List<User> contacts;
 
     public User(String login, String password) {
         this.login = login;
