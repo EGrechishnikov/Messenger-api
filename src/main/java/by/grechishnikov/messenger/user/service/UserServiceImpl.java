@@ -48,6 +48,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         if (user.getId() == 0) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         } else {
+            user.setPassword(findById(user.getId()).getPassword());
             user.setUpdated();
         }
         return super.saveOrUpdate(user);
@@ -64,10 +65,13 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     }
 
     @Override
-    public Page<User> search(String name, Pageable pageable) {
+    public Page<User> search(String name, String currentUserLogin, Pageable pageable) {
+        System.out.println(currentUserLogin);
+        System.out.println("%" + name + "%");
+        System.out.println(userRepository.test("user","%123%",pageable).getContent());
         return StringUtils.isEmpty(name)
-                ? userRepository.findAll(pageable)
-                : userRepository.findAllByNameLike("%" + name + "%", pageable);
+                ? userRepository.findAllByLoginNot(currentUserLogin, pageable)
+                : userRepository.findAllByLoginIsNotAndNameLike(currentUserLogin, "%" + name + "%", pageable);
     }
 
     @Override

@@ -34,6 +34,8 @@ public class SocketController {
      */
     @MessageMapping("/chat/message")
     public void sendSpecific(@Payload String msg, @Header("simpSessionId") String sessionId, Principal principal) throws Exception {
+        System.out.println(sessionId);
+        System.out.println(msg);
         for (int i=0; i<10; i++) {
             simpMessagingTemplate.convertAndSendToUser(principal.getName(), "/chat", msg);
             Thread.sleep(1500);

@@ -19,6 +19,11 @@ public interface UserRepository extends AbstractRepository<User> {
     @Query("SELECT id FROM User WHERE login = :login")
     int findIdByLogin(@Param("login") String login);
 
-    Page<User> findAllByNameLike(String name, Pageable pageable);
+    Page<User> findAllByLoginNot(String currentUserLogin, Pageable pageable);
+
+    Page<User> findAllByLoginIsNotAndNameLike(@Param("login") String login, @Param("name") String name, Pageable pageable);
+
+    @Query("FROM User u WHERE u.login <> :login AND u.name LIKE :name")
+    Page<User> test(@Param("login") String login, @Param("name") String name, Pageable pageable);
 
 }

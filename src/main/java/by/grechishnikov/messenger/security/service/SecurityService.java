@@ -1,7 +1,7 @@
 package by.grechishnikov.messenger.security.service;
 
 import by.grechishnikov.messenger.security.dto.TokenDTO;
-import by.grechishnikov.messenger.user.entity.User;
+import by.grechishnikov.messenger.security.dto.CredentialsDTO;
 
 /**
  * @author - Evgeniy Grechishnikov
@@ -10,6 +10,6 @@ public interface SecurityService {
 
     void logout(String currentRefreshToken);
 
-    TokenDTO registration(User user);
+    TokenDTO registration(CredentialsDTO credentials);
 
 }

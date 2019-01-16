@@ -26,6 +26,7 @@ public class User extends AbstractEntity {
 
     @Column(nullable = false)
     private String login;
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
     @Column
@@ -45,6 +46,11 @@ public class User extends AbstractEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "contact_id"))
     private List<User> contacts;
+
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
 
     public void setBlocked() {
         Calendar calendar = new GregorianCalendar();

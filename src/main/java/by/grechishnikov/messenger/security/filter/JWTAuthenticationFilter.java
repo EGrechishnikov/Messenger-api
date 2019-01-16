@@ -1,5 +1,6 @@
 package by.grechishnikov.messenger.security.filter;
 
+import by.grechishnikov.messenger.security.dto.CredentialsDTO;
 import by.grechishnikov.messenger.security.dto.TokenDTO;
 import by.grechishnikov.messenger.security.service.TokenService;
 import by.grechishnikov.messenger.user.entity.User;
@@ -38,16 +39,16 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req,
                                                 HttpServletResponse res) throws AuthenticationException {
-        User user = null;
+        CredentialsDTO credentials = null;
         try {
-            user = new ObjectMapper().readValue(req.getInputStream(), User.class);
+            credentials = new ObjectMapper().readValue(req.getInputStream(), CredentialsDTO.class);
             return authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPassword(), new ArrayList<>()));
+                    new UsernamePasswordAuthenticationToken(credentials.getLogin(), credentials.getPassword(), new ArrayList<>()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (AuthenticationException e) {
-            if (user != null) {
-                userService.failedLoginAttemptHandler(user.getLogin());
+            if (credentials != null) {
+                userService.failedLoginAttemptHandler(credentials.getLogin());
             }
             throw e;
         }

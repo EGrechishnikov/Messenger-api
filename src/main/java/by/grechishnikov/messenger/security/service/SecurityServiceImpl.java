@@ -1,6 +1,7 @@
 package by.grechishnikov.messenger.security.service;
 
 import by.grechishnikov.messenger.security.dto.TokenDTO;
+import by.grechishnikov.messenger.security.dto.CredentialsDTO;
 import by.grechishnikov.messenger.user.entity.User;
 import by.grechishnikov.messenger.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
-    public TokenDTO registration(User user) {
-        user = userService.saveOrUpdate(user);
+    public TokenDTO registration(CredentialsDTO credentials) {
+        User user = userService.saveOrUpdate(new User(credentials.getLogin(), credentials.getPassword()));
         return new TokenDTO(
                 tokenService.createAccessToken(user.getLogin()),
                 tokenService.createRefreshToken(user),

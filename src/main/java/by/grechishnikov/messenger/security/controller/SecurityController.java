@@ -3,7 +3,7 @@ package by.grechishnikov.messenger.security.controller;
 import by.grechishnikov.messenger.security.dto.TokenDTO;
 import by.grechishnikov.messenger.security.service.SecurityService;
 import by.grechishnikov.messenger.security.service.TokenService;
-import by.grechishnikov.messenger.user.entity.User;
+import by.grechishnikov.messenger.security.dto.CredentialsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,10 +46,11 @@ public class SecurityController {
     }
 
     @PostMapping("/user/registration")
-    public ResponseEntity<TokenDTO> registration(@RequestBody User user) {
+    public ResponseEntity<TokenDTO> registration(@RequestBody CredentialsDTO credentials) {
         try {
-            return new ResponseEntity<>(securityService.registration(user), HttpStatus.OK);
+            return new ResponseEntity<>(securityService.registration(credentials), HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -20,6 +20,12 @@ public class CustomHandshakeHandler extends DefaultHandshakeHandler {
     protected Principal determineUser(ServerHttpRequest request,
                                       WebSocketHandler wsHandler,
                                       Map<String, Object> attributes) {
+        try {
+            System.out.println(attributes.keySet());
+            System.out.println(request.getHeaders().keySet());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return new StompPrincipal(UUID.randomUUID().toString());
     }
 

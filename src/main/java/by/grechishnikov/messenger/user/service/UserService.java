@@ -21,6 +21,6 @@ public interface UserService extends AbstractService<User> {
 
     boolean isLoginExist(String login);
 
-    Page<User> search(String name, Pageable pageable);
+    Page<User> search(String name, String currentUserLogin, Pageable pageable);
 
 }

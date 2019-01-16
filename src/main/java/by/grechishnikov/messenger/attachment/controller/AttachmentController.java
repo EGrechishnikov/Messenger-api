@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * @author - Evgeniy Grechishnikov
  */
 @RestController
-@RequestMapping("/attachment")
+@RequestMapping("/api/v1/attachment")
 public class AttachmentController {
 
     private AttachmentService attachmentService;
