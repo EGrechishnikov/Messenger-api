@@ -6,7 +6,7 @@ import by.grechishnikov.messenger.contact.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author - Evgeniy Grechishnikov
@@ -32,7 +32,7 @@ public class ContactServiceImpl implements ContactService{
     }
 
     @Override
-    public Set<Contact> findAllContactsByUserId(int userId) {
+    public List<Contact> findAllContactsByUserId(int userId) {
         return contactRepository.findAllByUserId(userId);
     }
 }

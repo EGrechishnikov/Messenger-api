@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author - Evgeniy Grechishnikov
@@ -35,7 +35,7 @@ public class ContactController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<Set<Contact>> findContactsByUserId(@PathVariable int userId) {
+    public ResponseEntity<List<Contact>> findContactsByUserId(@PathVariable int userId) {
         try {
             return new ResponseEntity<>(contactService.findAllContactsByUserId(userId), HttpStatus.OK);
         } catch (Exception e) {

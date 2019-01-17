@@ -14,4 +14,6 @@ public interface TokenService {
 
     TokenDTO refreshTokens(String refreshToken);
 
+    String getLoginFromToken(String token);
+
 }

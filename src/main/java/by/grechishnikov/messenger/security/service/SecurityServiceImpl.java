@@ -40,4 +40,9 @@ public class SecurityServiceImpl implements SecurityService {
                 user.getLogin());
     }
 
+    @Override
+    public boolean isLoginExist(String login) {
+        return userService.isLoginExist(login);
+    }
+
 }

@@ -1,8 +1,7 @@
 package by.grechishnikov.messenger.security.filter;
 
 import by.grechishnikov.messenger.common.ApplicationProperty;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
+import by.grechishnikov.messenger.security.service.TokenService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,13 +21,13 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private static final String HEADER_NAME =
             ApplicationProperty.getStringProperty("security.header.authorization");
-    private static final String SECRET =
-            ApplicationProperty.getStringProperty("security.token.secret_key");
     private static final String TOKEN_PREFIX =
             ApplicationProperty.getStringProperty("security.token.prefix") + " ";
+    private TokenService tokenService;
 
-    public JWTAuthorizationFilter(AuthenticationManager authManager) {
+    public JWTAuthorizationFilter(AuthenticationManager authManager, TokenService tokenService) {
         super(authManager);
+        this.tokenService = tokenService;
     }
 
     @Override
@@ -50,19 +49,10 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        String token = request.getHeader(HEADER_NAME);
-        if (token != null) {
-            String user = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
-                    .build()
-                    .verify(token.replace(TOKEN_PREFIX, ""))
-                    .getSubject();
-
-            if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
-            }
-            return null;
-        }
-        return null;
+        return new UsernamePasswordAuthenticationToken(tokenService.getLoginFromToken(
+                request.getHeader(HEADER_NAME)),
+                null,
+                new ArrayList<>());
     }
 
 }

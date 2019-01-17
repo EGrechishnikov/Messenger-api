@@ -3,7 +3,7 @@ package by.grechishnikov.messenger.contact.service;
 import by.grechishnikov.messenger.contact.dto.ContactDTO;
 import by.grechishnikov.messenger.contact.entity.Contact;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author - Evgeniy Grechishnikov
@@ -14,6 +14,6 @@ public interface ContactService {
 
     void deleteById(int contactId);
 
-    Set<Contact> findAllContactsByUserId(int userId);
+    List<Contact> findAllContactsByUserId(int userId);
 
 }

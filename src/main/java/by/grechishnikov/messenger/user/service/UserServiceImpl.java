@@ -66,11 +66,8 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     @Override
     public Page<User> search(String name, String currentUserLogin, Pageable pageable) {
-        System.out.println(currentUserLogin);
-        System.out.println("%" + name + "%");
-        System.out.println(userRepository.test("user","%123%",pageable).getContent());
         return StringUtils.isEmpty(name)
-                ? userRepository.findAllByLoginNot(currentUserLogin, pageable)
+                ? userRepository.findAllByLoginIsNot(currentUserLogin, pageable)
                 : userRepository.findAllByLoginIsNotAndNameLike(currentUserLogin, "%" + name + "%", pageable);
     }
 
@@ -89,7 +86,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     @Override
     public boolean isLoginExist(String login) {
-        return userRepository.findIdByLogin(login) > 0;
+        return userRepository.findIdByLogin(login).isPresent();
     }
 
 }

@@ -45,16 +45,6 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{login}/exist")
-    public ResponseEntity<Boolean> isLoginExist(@PathVariable String login) {
-        try {
-            return new ResponseEntity<>(userService.isLoginExist(login), HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
 
     @GetMapping
     public ResponseEntity<Page<User>> search(@RequestParam(required = false) String name,

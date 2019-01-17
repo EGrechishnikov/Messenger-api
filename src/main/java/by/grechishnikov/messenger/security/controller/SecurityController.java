@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author - Evgeniy Grechishnikov
@@ -49,6 +46,16 @@ public class SecurityController {
     public ResponseEntity<TokenDTO> registration(@RequestBody CredentialsDTO credentials) {
         try {
             return new ResponseEntity<>(securityService.registration(credentials), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/user/{login}/exist")
+    public ResponseEntity<Boolean> isLoginExist(@PathVariable String login) {
+        try {
+            return new ResponseEntity<>(securityService.isLoginExist(login), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

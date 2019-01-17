@@ -1,13 +1,16 @@
 package by.grechishnikov.messenger.security.service;
 
 import by.grechishnikov.messenger.common.ApplicationProperty;
+import by.grechishnikov.messenger.common.exception.ResourceNotFoundException;
 import by.grechishnikov.messenger.security.dto.TokenDTO;
 import by.grechishnikov.messenger.user.entity.User;
 import by.grechishnikov.messenger.user.service.UserService;
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -26,6 +29,8 @@ public class TokenServiceImpl implements TokenService {
             ApplicationProperty.getIntegerProperty("security.token.access.expiration_time");
     private static final int REFRESH_TOKEN_EXPIRATION_TIME =
             ApplicationProperty.getIntegerProperty("security.token.refresh.expiration_time");
+    private static final String TOKEN_PREFIX =
+            ApplicationProperty.getStringProperty("security.token.prefix") + " ";
     private UserService userService;
 
     @Autowired
@@ -57,6 +62,18 @@ public class TokenServiceImpl implements TokenService {
             throw new BadCredentialsException("Invalid refresh token");
         }
         return new TokenDTO(createAccessToken(user.getLogin()), createRefreshToken(user), user.getLogin());
+    }
+
+    @Override
+    public String getLoginFromToken(String token) {
+        if (!StringUtils.isEmpty(token)) {
+            return JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
+                    .build()
+                    .verify(token.replace(TOKEN_PREFIX, ""))
+                    .getSubject();
+        } else {
+            throw new ResourceNotFoundException("Token is empty");
+        }
     }
 
 }

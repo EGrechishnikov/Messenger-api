@@ -1,44 +1,31 @@
 package by.grechishnikov.messenger.websocket.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.socket.messaging.SessionConnectedEvent;
-
-import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-
 /**
  * @author - Evgeniy Grechishnikov
  */
 @Controller
+@SuppressWarnings("unused")
 public class SocketController {
 
-    @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
-    /**
-     * Example of sending message to specific user using 'convertAndSendToUser()' and '/queue'
-     */
+    @Autowired
+    public SocketController(SimpMessagingTemplate simpMessagingTemplate) {
+        this.simpMessagingTemplate = simpMessagingTemplate;
+    }
+
     @MessageMapping("/chat/message")
     public void sendSpecific(@Payload String msg, @Header("simpSessionId") String sessionId, Principal principal) throws Exception {
-        System.out.println(sessionId);
-        System.out.println(msg);
-        for (int i=0; i<10; i++) {
-            simpMessagingTemplate.convertAndSendToUser(principal.getName(), "/chat", msg);
-            Thread.sleep(1500);
+        for (int i=0; i<5; i++) {
+            simpMessagingTemplate.convertAndSendToUser(principal.getName(), "/chat", principal.getName() + ":" + msg);
+            Thread.sleep(1000);
         }
     }
 
