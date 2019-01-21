@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
  */
 public interface MessageService extends AbstractService<Message> {
 
+    void sendMessage(Message message);
+
     Page<Message> findAllByChatId(int chartId, Pageable pageable);
 
 }
