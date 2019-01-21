@@ -14,15 +14,17 @@ import javax.persistence.Table;
 @Table(name = "t_message")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class Message extends AbstractEntity{
 
     @Column(nullable = false)
     private String text;
-    @Column(nullable = false)
+    @Column(name = "from_user_id", nullable = false)
     private int fromUserId;
-    @Column(nullable = false)
-    private int toUserId;
+    @Column(name = "chat_id", nullable = false)
+    private int chatId;
 
 }

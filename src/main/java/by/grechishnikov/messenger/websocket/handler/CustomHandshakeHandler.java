@@ -8,13 +8,12 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
 import java.security.Principal;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author - Evgeniy Grechishnikov
  */
 public class CustomHandshakeHandler extends DefaultHandshakeHandler {
-
-
 
     @Override
     protected Principal determineUser(ServerHttpRequest request,

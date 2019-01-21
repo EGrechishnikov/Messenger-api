@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author - Evgeniy Grechishnikov
  */
 @RestController
-@RequestMapping(value = "/api/v1/user")
+@RequestMapping("/api/v1/user")
 public class UserController {
 
     private UserService userService;

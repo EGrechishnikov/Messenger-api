@@ -1,5 +1,7 @@
 package by.grechishnikov.messenger.websocket.controller;
 
+import by.grechishnikov.messenger.message.entity.Message;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -22,11 +24,12 @@ public class SocketController {
     }
 
     @MessageMapping("/chat/message")
-    public void sendSpecific(@Payload String msg, @Header("simpSessionId") String sessionId, Principal principal) throws Exception {
-        for (int i=0; i<5; i++) {
-            simpMessagingTemplate.convertAndSendToUser(principal.getName(), "/chat", principal.getName() + ":" + msg);
-            Thread.sleep(1000);
-        }
+    public void sendSpecific(@Payload Message message, @Header("simpSessionId") String sessionId, Principal principal) throws Exception {
+        System.out.println(message);
+//        for (int i=0; i<5; i++) {
+            simpMessagingTemplate.convertAndSendToUser("user", "/chat", message);
+//            Thread.sleep(1000);
+//        }
     }
 
 }
