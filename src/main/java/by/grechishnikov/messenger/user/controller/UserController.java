@@ -28,8 +28,7 @@ public class UserController {
     public ResponseEntity<User> save(@RequestParam(value = "user") String json,
                                      @RequestParam(value = "file", required = false) MultipartFile avatar) {
         try {
-            userService.convertAndSave(json, avatar);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(userService.convertAndSave(json, avatar), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -44,7 +43,6 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @GetMapping
     public ResponseEntity<Page<User>> search(@RequestParam(required = false) String name,

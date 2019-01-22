@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface UserService extends AbstractService<User> {
 
-    void convertAndSave(String json, MultipartFile avatar) throws Exception;
+    User convertAndSave(String json, MultipartFile avatar) throws Exception;
 
     User findByLogin(String login);
 

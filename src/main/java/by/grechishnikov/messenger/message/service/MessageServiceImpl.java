@@ -33,9 +33,11 @@ public class MessageServiceImpl extends AbstractServiceImpl<Message> implements 
     @Override
     public void sendMessage(Message message) {
         saveOrUpdate(message);
-        chatService.findById(message.getChatId()).getUsers().forEach(user ->
-            simpMessagingTemplate.convertAndSendToUser(user.getLogin(),"/chat", message)
-        );
+        chatService.findById(message.getChatId())
+                .getUsers()
+                .stream()
+                .filter(user -> user.getId() != message.getFromUserId())
+                .forEach(user -> simpMessagingTemplate.convertAndSendToUser(user.getLogin(), "/chat", message));
     }
 
     @Override

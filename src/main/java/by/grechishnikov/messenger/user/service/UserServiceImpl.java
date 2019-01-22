@@ -30,7 +30,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     }
 
     @Override
-    public void convertAndSave(String json, MultipartFile avatar) throws Exception {
+    public User convertAndSave(String json, MultipartFile avatar) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(json, User.class);
         if (avatar != null && !avatar.isEmpty()) {
@@ -40,7 +40,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
                 user.getAttachment().setContent(avatar.getBytes());
             }
         }
-        saveOrUpdate(user);
+        return saveOrUpdate(user);
     }
 
     @Override
