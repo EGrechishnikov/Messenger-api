@@ -55,8 +55,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
-                                            Authentication auth) throws IOException {
+    protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res,
+                                            FilterChain chain, Authentication auth) throws IOException {
         String login = ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();
         User user = userService.findByLogin(login);
         String accessToken = tokenService.createAccessToken(login);

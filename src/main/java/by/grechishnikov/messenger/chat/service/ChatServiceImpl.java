@@ -24,4 +24,5 @@ public class ChatServiceImpl extends AbstractServiceImpl<Chat> implements ChatSe
     public List<Chat> findAllByUserId(int userId) {
         return chatRepository.findAllByUserId(userId);
     }
+
 }

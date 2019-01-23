@@ -34,7 +34,7 @@ public class ChatController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<Chat>> findContactsByUserId(@PathVariable int userId) {
+    public ResponseEntity<List<Chat>> findChatsByUserId(@PathVariable int userId) {
         try {
             return new ResponseEntity<>(chatService.findAllByUserId(userId), HttpStatus.OK);
         } catch (Exception e) {
