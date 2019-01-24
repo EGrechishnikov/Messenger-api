@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Set;
+
 /**
  * @author - Evgeniy Grechishnikov
  */
@@ -22,5 +24,7 @@ public interface UserService extends AbstractService<User> {
     boolean isLoginExist(String login);
 
     Page<User> search(String name, String currentUserLogin, Pageable pageable);
+
+    Set<User> findAllByChatId(int chatId, int userId);
 
 }

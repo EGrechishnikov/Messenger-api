@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author - Evgeniy Grechishnikov
@@ -24,5 +25,8 @@ public interface UserRepository extends AbstractRepository<User> {
     Page<User> findAllByLoginIsNot(String currentUserLogin, Pageable pageable);
 
     Page<User> findAllByLoginIsNotAndNameLike(@Param("login") String login, @Param("name") String name, Pageable pageable);
+
+    @Query(value = "SELECT * FROM t_user u INNER JOIN t_chat_user c ON u.id = c.user_id WHERE c.chat_id = :chatId AND u.id <> :userId", nativeQuery = true)
+    Set<User> findAllByChatId(@Param("chatId") int chatId, @Param("userId") int userId);
 
 }

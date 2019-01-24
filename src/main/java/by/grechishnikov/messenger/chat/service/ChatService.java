@@ -10,6 +10,8 @@ import java.util.List;
  */
 public interface ChatService extends AbstractService<Chat> {
 
+    Chat saveOrUpdate(Chat chat, int userId);
+
     List<Chat> findAllByUserId(int userId);
 
 }

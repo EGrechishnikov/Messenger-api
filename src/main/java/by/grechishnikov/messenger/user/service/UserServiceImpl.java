@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Set;
+
 /**
  * @author - Evgeniy Grechishnikov
  */
@@ -62,6 +64,11 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     @Override
     public User findByCurrentRefreshToken(String refreshToken) {
         return userRepository.findByCurrentRefreshToken(refreshToken);
+    }
+
+    @Override
+    public Set<User> findAllByChatId(int chatId, int userId) {
+        return userRepository.findAllByChatId(chatId, userId);
     }
 
     @Override

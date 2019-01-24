@@ -29,13 +29,12 @@ public class ChatController {
         this.messageService = messageService;
     }
 
-    @PostMapping
-    public ResponseEntity save(@RequestBody Chat chat) {
+    @PostMapping("/{userId}")
+    public ResponseEntity<Chat> save(@RequestBody Chat chat, @PathVariable int userId) {
         try {
-            chatService.saveOrUpdate(chat);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(chatService.saveOrUpdate(chat, userId), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
