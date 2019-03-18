@@ -30,11 +30,11 @@ public class User extends AbstractEntity {
     private String password;
     @Column
     private String name;
-    @Column
+    @Column(name = "failed_login_attempts")
     private int failedLoginAttempts;
-    @Column
+    @Column(name = "blocked_till")
     private Date blockedTill;
-    @Column
+    @Column(name = "current_refresh_token")
     private String currentRefreshToken;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "avatar_id")
