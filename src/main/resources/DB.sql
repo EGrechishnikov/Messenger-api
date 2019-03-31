@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS t_attachment (
     id      serial NOT NULL,
-    content bytea NOT NULL,
+    content bytea  NOT NULL,
     created timestamp without time zone NOT NULL,
     updated timestamp without time zone NOT NULL,
 
@@ -22,6 +22,8 @@ CREATE TABLE IF NOT EXISTS t_user (
     CONSTRAINT t_user_pk PRIMARY KEY (id),
     CONSTRAINT t_attachment_fk FOREIGN KEY (avatar_id) REFERENCES t_attachment (id)
 );
+
+CREATE INDEX IF NOT EXISTS login_index ON t_user (login);
 
 CREATE TABLE IF NOT EXISTS t_chat (
     id      serial NOT NULL,
@@ -52,3 +54,5 @@ CREATE TABLE IF NOT EXISTS t_message (
     CONSTRAINT t_chat_fk FOREIGN KEY (chat_id) REFERENCES t_chat (id),
     CONSTRAINT t_user_fk FOREIGN KEY (from_user_id) REFERENCES t_user (id)
 );
+
+CREATE INDEX IF NOT EXISTS chat_id_index ON t_message (chat_id)
