@@ -1,6 +1,7 @@
 package by.grechishnikov.messenger.chat.entity;
 
 import by.grechishnikov.messenger.common.entity.AbstractEntity;
+import by.grechishnikov.messenger.message.entity.Message;
 import by.grechishnikov.messenger.user.entity.User;
 import lombok.*;
 
@@ -17,8 +18,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true, exclude = "lastMessage")
+@EqualsAndHashCode(callSuper = true, exclude = "lastMessage")
 public class Chat extends AbstractEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -26,5 +27,8 @@ public class Chat extends AbstractEntity {
             joinColumns = {@JoinColumn(name = "chat_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private Set<User> users = new HashSet<>();
+
+    @Transient
+    private Message lastMessage;
 
 }

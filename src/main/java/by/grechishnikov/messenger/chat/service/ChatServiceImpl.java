@@ -3,12 +3,12 @@ package by.grechishnikov.messenger.chat.service;
 import by.grechishnikov.messenger.chat.entity.Chat;
 import by.grechishnikov.messenger.chat.repository.ChatRepository;
 import by.grechishnikov.messenger.common.service.AbstractServiceImpl;
-import by.grechishnikov.messenger.user.entity.User;
+import by.grechishnikov.messenger.message.service.MessageService;
 import by.grechishnikov.messenger.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author - Evgeniy Grechishnikov
@@ -18,8 +18,11 @@ public class ChatServiceImpl extends AbstractServiceImpl<Chat> implements ChatSe
 
     private ChatRepository chatRepository;
     private UserService userService;
+    @Autowired
+    private MessageService messageService;
 
-    public ChatServiceImpl(ChatRepository chatRepository, UserService userService) {
+    public ChatServiceImpl(ChatRepository chatRepository,
+                           UserService userService) {
         super(chatRepository);
         this.chatRepository = chatRepository;
         this.userService = userService;
@@ -34,7 +37,9 @@ public class ChatServiceImpl extends AbstractServiceImpl<Chat> implements ChatSe
 
     @Override
     public List<Chat> findAllByUserId(int userId) {
-        return chatRepository.findAllByUserId(userId);
+        List<Chat> chats = chatRepository.findAllByUserId(userId);
+        chats.forEach(chat -> chat.setLastMessage(messageService.findLastMessageByChatId(chat.getId())));
+        return chats;
     }
 
 }

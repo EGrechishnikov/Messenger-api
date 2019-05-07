@@ -14,4 +14,6 @@ public interface MessageService extends AbstractService<Message> {
 
     Page<Message> findAllByChatId(int chartId, Pageable pageable);
 
+    Message findLastMessageByChatId(int chatId);
+
 }

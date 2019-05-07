@@ -4,6 +4,7 @@ import by.grechishnikov.messenger.security.dto.TokenDTO;
 import by.grechishnikov.messenger.security.service.SecurityService;
 import by.grechishnikov.messenger.security.service.TokenService;
 import by.grechishnikov.messenger.security.dto.CredentialsDTO;
+import by.grechishnikov.messenger.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,15 @@ public class SecurityController {
 
     private TokenService tokenService;
     private SecurityService securityService;
+    private UserService userService;
 
     @Autowired
-    public SecurityController(TokenService tokenService, SecurityService securityService) {
+    public SecurityController(TokenService tokenService,
+                              SecurityService securityService,
+                              UserService userService) {
         this.tokenService = tokenService;
         this.securityService = securityService;
+        this.userService = userService;
     }
 
     @PostMapping("/token/refresh")
@@ -55,7 +60,7 @@ public class SecurityController {
     @GetMapping("/user/{login}/exist")
     public ResponseEntity<Boolean> isLoginExist(@PathVariable String login) {
         try {
-            return new ResponseEntity<>(securityService.isLoginExist(login), HttpStatus.OK);
+            return new ResponseEntity<>(userService.isLoginExist(login), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

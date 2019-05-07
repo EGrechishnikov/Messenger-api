@@ -45,4 +45,8 @@ public class MessageServiceImpl extends AbstractServiceImpl<Message> implements 
         return messageRepository.findAllByChatId(chartId, pageable);
     }
 
+    @Override
+    public Message findLastMessageByChatId(int chatId) {
+        return messageRepository.findFirstByChatIdOrderByCreatedDesc(chatId).orElse(null);
+    }
 }

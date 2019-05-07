@@ -12,6 +12,4 @@ public interface SecurityService {
 
     TokenDTO registration(CredentialsDTO credentials);
 
-    boolean isLoginExist(String login);
-
 }
