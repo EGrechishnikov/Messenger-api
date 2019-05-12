@@ -31,7 +31,7 @@ public class ChatServiceImpl extends AbstractServiceImpl<Chat> implements ChatSe
     @Override
     public Chat saveOrUpdate(Chat chat, int userId) {
         chat = super.saveOrUpdate(chat);
-        chat.setUsers(userService.findAllByChatId(chat.getId(), userId));
+        chat.setUsers(userService.findAllByChatIdAndUserId(chat.getId(), userId));
         return chat;
     }
 

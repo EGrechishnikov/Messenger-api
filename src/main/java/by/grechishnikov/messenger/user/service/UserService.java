@@ -23,8 +23,8 @@ public interface UserService extends AbstractService<User> {
 
     boolean isLoginExist(String login);
 
-    Page<User> search(String name, String currentUserLogin, Pageable pageable);
+    Page<User> searchAllByNameAndCurrentUserLogin(String name, String currentUserLogin, Pageable pageable);
 
-    Set<User> findAllByChatId(int chatId, int userId);
+    Set<User> findAllByChatIdAndUserId(int chatId, int userId);
 
 }

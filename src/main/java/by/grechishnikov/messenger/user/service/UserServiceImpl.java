@@ -67,12 +67,12 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     }
 
     @Override
-    public Set<User> findAllByChatId(int chatId, int userId) {
-        return userRepository.findAllByChatId(chatId, userId);
+    public Set<User> findAllByChatIdAndUserId(int chatId, int userId) {
+        return userRepository.findAllByChatIdAndUserId(chatId, userId);
     }
 
     @Override
-    public Page<User> search(String name, String currentUserLogin, Pageable pageable) {
+    public Page<User> searchAllByNameAndCurrentUserLogin(String name, String currentUserLogin, Pageable pageable) {
         return StringUtils.isEmpty(name)
                 ? userRepository.findAllByLoginIsNot(currentUserLogin, pageable)
                 : userRepository.findAllByLoginIsNotAndNameLike(currentUserLogin, "%" + name + "%", pageable);
